@@ -1,0 +1,2 @@
+# Monitor_with_zabbix
+收集整理zabbix监控脚本
