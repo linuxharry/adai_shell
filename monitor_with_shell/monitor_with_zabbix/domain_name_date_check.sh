@@ -1,10 +1,5 @@
-#### 参考脚本
-```
 #!/bin/bash
 #检测域名是否过期
-#作者：阿铭
-#日期：2018-10-10
-#版本：v0.2
 
 mail_u=admin@admin.com
 #当前日期时间戳，用于和域名的到期时间做比较
@@ -57,4 +52,4 @@ for d in aaa.net aaa.com bbb.com  aaa.cn ccc.com
 do
     notify $d &
 done
-```
+

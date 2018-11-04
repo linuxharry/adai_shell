@@ -1,16 +1,39 @@
-#### 参考脚本
-```
 #!/bin/bash
-#检测MySQL主从是否同步
-#作者：阿铭
-#日期：2018-09-29
-#版本：v0.2
+##监控磁盘使用情况，并做告警收敛（30分钟发一次邮件）
 
 #把脚本名字存入变量s_name
 s_name=`echo $0|awk -F '/' '{print $NF}'`
-Mysql_c="mysql -uroot -ptpH40Kznv"
+#定义收件人邮箱
+mail_user=admin@admin.com
 
-#该函数实现邮件告警收敛，在案例五种出现过，通用
+#定义检查磁盘空间使用率函数
+chk_sp() 
+{
+    
+    df -m|sed '1d' |awk -F '%| +' '$5>90 {print $7,$5}'>/tmp/chk_sp.log 
+    n=`wc -l /tmp/chk_sp.log|awk '{print $1}'`
+    if [ $n -gt 0 ]
+    then 
+        tag=1
+        for d in `awk '{print $1}' /tmp/chk_sp.log`
+        do
+            find $d -type d |sed '1d'|xargs du -sm |sort -nr |head -3 
+        done > /tmp/most_sp.txt
+    fi
+}
+
+#定义检查inode使用率函数
+chk_in()
+{
+    df -i|sed '1d'|awk -F '%| +' '$5>90 {print $7,$5}'>/tmp/chk_in.log
+        n=`wc -l /tmp/chk_in.log|awk '{print $1}'`
+        if [ $n -gt 0 ]
+        then
+                tag=2
+        fi
+}
+
+#定义告警函数（这里的mail.py是案例二中那个脚本）
 m_mail() {
     log=$1
     t_s=`date +%s`
@@ -34,7 +57,7 @@ m_mail() {
     if [ $v -gt 1800 ]
     then
         #发邮件，其中$2为mail函数的第二个参数，这里为一个文件
-        python mail.py $mail_user $1 "`cat $2`"  2>/dev/null   
+        python mail.py $mail_user "磁盘使用率超过90%" "`cat $2`"  2>/dev/null   
         #定义计数器临时文件，并写入0         
         echo "0" > /tmp/$log.count
     else
@@ -50,7 +73,7 @@ m_mail() {
         #当告警次数超过30次，需要再次发邮件
         if [ $nu2 -gt 30 ]
         then
-             python mail.py $mail_user "$1 30 min" "`cat $2`" 2>/dev/null  
+             python mail.py $mail_user "磁盘使用率超过90%持续30分钟了" "`cat $2`" 2>/dev/null  
              #第二次告警后，将计数器再次从0开始          
              echo "0" > /tmp/$log.count
         fi
@@ -67,27 +90,14 @@ then
     exit
 fi
 
-#先执行一条执行show processlist，看是否执行成功
-$Mysql_c -e "show processlist" >/tmp/mysql_pro.log 2>/tmp/mysql_log.err
+chk_sp
+chk_in
 
-#如果上一条命令执行不成功，说明这个MySQL服务出现了问题
-if [ $? -gt 0 ]
+if [ $tag == 1 ]
 then
-    m_mail mysql_service_error /tmp/mysql_log.err
-    exit
-else
-    $Mysql_c -e "show slave status\G" >/tmp/mysql_s.log
-    n1=`wc -l /tmp/mysql_s.log|awk '{print $1}'`
-
-    if [ $n1 -gt 0 ]
-    then
-        y1=`grep 'Slave_IO_Running:' /tmp/mysql_s.log|awk -F : '{print $2}'|sed 's/ //g'`
-        y2=`grep 'Slave_SQL_Running:' /tmp/mysql_s.log|awk -F : '{print $2}'|sed 's/ //g'`
-
-        if [ $y1 == "No" ] || [ $y2 == "No" ]
-        then
-            m_mail mysql_slavestatus_error /tmp/mysql_s.log  
-        fi
-    fi
+    m_mail chk_sp /tmp/most_sp.txt
+elif [ $tag == 2 ]
+then
+        m_mail chk_in /tmp/chk_in.log
 fi
-```
+

@@ -1,12 +1,6 @@
-#### 案例1参考脚本
-
-```
 #!/bin/bash
-##该脚本用来备份本机数据库
+##数据库备份
 ##本地保留一周，远程保留一个月
-##作者：阿铭
-##日期：2018-09-15
-##版本：v0.1
 
 mysqldump="/usr/local/mysql/bin/mysqldump"
 bakuser="backup"
@@ -33,11 +27,11 @@ find $bakdir/ -type f -name "*.sql" -mtime +1 |xargs gzip
 #查找一周以前的老文件，并删除
 find $bakdir/ -type f -mtime +7 |xargs rm
 
-#把当天的备份文件同步到远程
+#把当天的备份文件同步到远程(数据库异地备份)，限制传输速度为 50000k Bytes/s == 50M/s
 for db in db1 db2 db3 db4 db5
 do
-    rsync -a $bakdir/$db-$d1.sql $remote_dir/$db-$d2.sql
+    rsync -avP --bwlimit=50000 $bakdir/$db-$d1.sql $remote_dir/$db-$d2.sql
 done
 
 echo "mysql backup end at `date`"
-```
+

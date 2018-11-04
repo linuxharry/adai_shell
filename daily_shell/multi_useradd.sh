@@ -1,10 +1,5 @@
-#### 参考脚本
-```
 #!/bin/bash
 ##批量添加100个用户，user01-user100
-##作者：阿铭
-##日期：2018-09-18
-##版本：v0.1
 
 #检查是否有mkpasswd命令
 #如果没有该命令，需要安装expect包
@@ -35,4 +30,3 @@ useradd -g users user_100
 echo "给用户user100设定密码"
 echo $pass|passwd --stdin user_100
 echo "user_100 $pass" >>/data/user_passwd
-```

@@ -1,4 +1,6 @@
-# 51CTO
+# 说明
+## 链接脚本
+* [mail.py](adai_python/monitor_with_python/mail.py)
 
 专栏地址： [http://blog.51cto.com/cloumn/detail/22](http://blog.51cto.com/cloumn/detail/22)
 

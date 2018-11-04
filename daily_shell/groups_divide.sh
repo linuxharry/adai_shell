@@ -1,5 +1,5 @@
-#### 测试人员名单
 ```
+# 示例名单
 xiaoguisheng
 guoyuqing
 xiongyongzheng
@@ -74,13 +74,8 @@ xuxiaping
 jiangchunqing
 ```
 
-#### 参考脚本
-```
 #!/bin/bash
 #给人员划分小组
-#作者：阿铭
-#日期：2018-10-11
-#版本：v1.0
 
 #人员列表文件
 f=member.txt
@@ -244,5 +239,3 @@ do
     rm -f n_$i.txt
     echo
 done
-
-```

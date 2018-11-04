@@ -1,9 +1,5 @@
-#### 本案例参考脚本
-```
 #!/bin/bash
 #本脚本的功能是在LAMP环境中增加站点，包括apache配置、FTP增加用户、MySQL增加库和用户
-#作者：阿铭
-#日期：2018-10-24
 
 #网站目录
 webdir=/data/wwwroot
@@ -89,4 +85,3 @@ read -p "input the domain: " dom
 add_mysql_user
 add_ftp_user
 config_httpd
-```

@@ -1,18 +1,5 @@
-#### 参考日志
-```
-180.98.113.151 - [19/Sep/2018:09:30:07 +0800]  "/uc_server/avatar.php?uid=1145811&size=middle" 301 "GET  HTTP/1.1" "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 9_2_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13D15 MAGAPPX|4.1.2-4.1.0-41|iPhone OS 9.2.1 iPhone 6|wenyou|C6C25422-279C-4337-8E10-F588D577B9D7|da97ede5be797f79b96d6761bf858632|426ef86c3fc2359dc90468f7bdd0f5e9|c64f2225ec641231cd612bbe08f2b40d" 
-61.227.224.229 - [19/Sep/2018:09:30:07 +0800]  "/misc.php?mod=ranklist&type=member&view=post" 200 "GET  HTTP/1.1" "http://www.wenyou.com/" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0" 
-183.207.95.145  [19/Sep/2018:09:30:07 +0800]  "/uc_server/avatar.php?uid=1323875&size=middle" 301 "GET  HTTP/1.1" "http://app.yikaidai.com/mag/circle/v1/forum/threadViewPage?tid=3446714&circle_id=&themecolor=1aadfa" "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_3 like Mac OS X) AppleWebKit/604.1.38 "
-114.230.251.50 - [19/Sep/2018:09:30:07 +0800]  "/core/attachment/attachment/img?url=https%3A%2F%2Fmmbiz.qpic.cn%2Fmmbiz_jpg" 302 "GET HTTP/1.1" "https://app.yikai.com/mag/info/v1/info/infoView?id=55855&themecolor=1aadfa" "Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) "
-61.227.224.229 - [19/Sep/2018:09:30:07 +0800]  "/misc.php?mod=ranklist&type=member&view=onlinetime" 200 "GET HTTP/1.1" "http://www.wenyou.com/" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0" 
-```
-#### 参考脚本
-```
 #! /bin/bash
 ## 把访问量比较大的IP封掉，如果20分钟内被封的IP没有请求或者请求很少，需要解封
-## 作者：阿铭
-## 日期：2018-09-20
-## 版本：v0.1
 
 #定义1分钟以前的时间，用于过滤1分钟以前的日志
 t1=`date -d "-1 min" +%Y:%H:%M`
@@ -70,4 +57,3 @@ then
 else
    block_ip
 fi
-```

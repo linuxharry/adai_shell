@@ -1,10 +1,5 @@
-#### 参考脚本
-```
 #!/bin/bash
 #监控网卡流量，当流量为0，重启网卡
-#作者：阿铭
-#日期：2018-10-07
-#版本：v0.2
 
 #设定语言为英文
 LANG=en
@@ -83,4 +78,3 @@ fi
     
 echo "net_in $net_in" >> $dir/net.log
 echo "net_out $net_out" >> $dir/net.log
-```
