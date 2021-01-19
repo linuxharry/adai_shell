@@ -12,7 +12,7 @@ if [ ! -d $backup_dir ];then
   mkdir -p $backup_dir
 fi
 
-mysqldump -uroot -p'JArcLUe2VyfG2vtr'  --single-transaction --all-databases |gzip > $backup_dir/$ts.gz
+mysqldump -uroot -p'xxxxxxx'  --single-transaction --all-databases |gzip > $backup_dir/$ts.gz
 
 # 备份至阿里云oss
 /usr/bin/ossutil --config-file /usr/local/ossutil/config  cp $backup_dir/$ts.gz  oss://bbmm-op/backups/wiki-jira-mysql/
