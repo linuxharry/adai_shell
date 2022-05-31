@@ -11,7 +11,7 @@ is_install_whois()
     which whois >/dev/null 2>/dev/null
     if [ $? -ne 0 ]
     then
-        yum install -y jwhois
+        yum install -y whois
     fi
 }
 

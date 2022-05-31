@@ -6,7 +6,7 @@ s_name=`echo $0|awk -F '/' '{print $NF}'`
 #定义收件人邮箱
 mail_user=admin@admin.com
 
-#定义检查磁盘空间使用率函数
+# 定义检查磁盘空间使用率函数
 chk_sp() 
 {
     
@@ -22,7 +22,7 @@ chk_sp()
     fi
 }
 
-#定义检查inode使用率函数
+# 定义检查inode使用率函数
 chk_in()
 {
     df -i|sed '1d'|awk -F '%| +' '$5>90 {print $7,$5}'>/tmp/chk_in.log
@@ -33,7 +33,7 @@ chk_in()
         fi
 }
 
-#定义告警函数（这里的mail.py是案例二中那个脚本）
+# 定义告警函数（这里的mail.py是案例二中那个脚本）
 m_mail() {
     log=$1
     t_s=`date +%s`
